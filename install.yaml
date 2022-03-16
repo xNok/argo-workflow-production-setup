@@ -592,6 +592,7 @@ kind: Deployment
 metadata:
   name: argo-server
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: argo-server
@@ -608,6 +609,13 @@ spec:
         ports:
         - containerPort: 2746
           name: web
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 500m
+            memory: 128Mi
         readinessProbe:
           httpGet:
             path: /
@@ -630,6 +638,7 @@ spec:
       volumes:
       - emptyDir: {}
         name: tmp
+
 ---
 apiVersion: apps/v1
 kind: Deployment
