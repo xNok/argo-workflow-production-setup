@@ -1,0 +1,19 @@
+# This file describes the config settings available in the workflow controller configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workflow-controller-configmap
+data:
+  artifactRepository: |
+    s3:
+      bucket: my-bucket
+      endpoint: argo-artifacts.argo.svc.cluster.local:9000
+      insecure: true
+      key: output/hello_world.txt
+      # References to kubernetes secrets holding credentials
+      accessKeySecret:
+        name: argo-artifacts
+        key: accesskey
+      secretKeySecret:
+        name: argo-artifacts
+        key: secretkey
