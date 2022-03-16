@@ -4,12 +4,13 @@ kind: ConfigMap
 metadata:
   name: workflow-controller-configmap
 data:
+  # Configure artifact repository
+  # using minio in this example
   artifactRepository: |
     s3:
       bucket: my-bucket
       endpoint: argo-artifacts.argo.svc.cluster.local:9000
       insecure: true
-      key: output/hello_world.txt
       # References to kubernetes secrets holding credentials
       accessKeySecret:
         name: argo-artifacts
