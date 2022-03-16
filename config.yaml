@@ -18,3 +18,41 @@ data:
       secretKeySecret:
         name: argo-artifacts
         key: secretkey
+
+  # Default values that will apply to all Workflows from this controller
+  # unless overridden on the Workflow-level
+  workflowDefaults: |
+    metadata:
+      annotations:
+        argo: workflows
+      labels:
+        foo: bar
+    spec:
+      ttlStrategy:
+        secondsAfterCompletion: 10 # Time to live after workflow is completed, replaces  ttlSecondsAfterFinished
+        secondsAfterSuccess: 5     # Time to live after workflow is successful
+        secondsAfterFailure: 5     # Time to live after workflow fails
+      parallelism: 3
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 8737 #; any non-root user
+
+  # Defaults for main containers. These can be overridden by the template.
+  mainContainer: |
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: 0.1
+        memory: 64Mi
+      limits:
+        cpu: 0.5
+        memory: 512Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 1000
+
