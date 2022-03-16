@@ -56,3 +56,10 @@ data:
       runAsNonRoot: true
       runAsUser: 1000
 
+  # Globally limits the rate at which pods are created.
+  # This is intended to mitigate flooding of the Kubernetes API server by workflows with a large amount of
+  # parallel nodes.
+  resourceRateLimit: |
+    limit: 10
+    burst: 1
+
